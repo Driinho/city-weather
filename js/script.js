@@ -39,7 +39,7 @@ const showWeatherData = async city => {
     )
     countryElement.setAttribute('src', apiCountryURL + data.sys.country)
     humidityElement.innerText = `${data.main.humidity}%`
-    windElement.innesText = `${data.wind.speed}km/h`
+    windElement.innerText = `${data.wind.speed}km/h`
 
     weatherContainer.classList.remove('hide')
 }
