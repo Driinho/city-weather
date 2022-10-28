@@ -14,17 +14,17 @@ const humidityElement = document.querySelector('#humidity span')
 const windElement = document.querySelector('#wind span')
 
 const weatherContainer = document.querySelector('#weather-data')
+const container = document.querySelector('#error')
 
 // Funções
 const getWeatherData = async city => {
     const apiWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=pt_br`
 
-    const res = await fetch(apiWeatherURL)
-    const data = await res.json()
+    const res = await fetch(apiWeatherURL).then(function (res) {
+        return res.json()
+    })
 
-    console.log(data)
-
-    return data
+    return mostrar(res)
 }
 
 const showWeatherData = async city => {
@@ -42,6 +42,41 @@ const showWeatherData = async city => {
     windElement.innerText = `${data.wind.speed}km/h`
 
     weatherContainer.classList.remove('hide')
+}
+
+function mostrar(data) {
+    if (data.cod === 404) {
+        weatherContainer.classList.add('hide')
+        return (container.innerText =
+            '<div id="error" class="not-found"></div>')
+    } else {
+        return (
+            <div id="weather-data" class="hide">
+                <h2>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span id="city"></span>
+                    <img src="" alt="Bandeira do país" id="country" />
+                </h2>
+                <p id="temperature">
+                    <span></span>&deg;C
+                </p>
+                <div id="description-container">
+                    <p id="description"></p>
+                    <img src="" alt="Condições do tempo" id="weather-icon" />
+                </div>
+                <div id="details-container">
+                    <p id="humidity">
+                        <i class="fa-solid fa-droplet"></i>
+                        <span></span>
+                    </p>
+                    <p id="wind">
+                        <i class="fa-solid fa-wind"></i>
+                        <span></span>
+                    </p>
+                </div>
+            </div>
+        )
+    }
 }
 
 // Eventos

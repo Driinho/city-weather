@@ -99,3 +99,10 @@ body {
     margin: 0.6rem;
     padding: 0.6rem;
 }
+
+.not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
