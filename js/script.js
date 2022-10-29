@@ -13,8 +13,7 @@ const countryElement = document.querySelector('#country')
 const humidityElement = document.querySelector('#humidity span')
 const windElement = document.querySelector('#wind span')
 
-const weatherContainer = document.querySelector('#weather-data')
-const container = document.querySelector('#error')
+const weatherContainer = document.querySelector('.carregamento-api')
 
 // Funções
 const getWeatherData = async city => {
@@ -24,58 +23,45 @@ const getWeatherData = async city => {
         return res.json()
     })
 
-    return mostrar(res)
+    return res
 }
 
 const showWeatherData = async city => {
     const data = await getWeatherData(city)
+    console.log(data)
 
-    cityElement.innerText = data.name
-    tempElement.innerText = parseInt(data.main.temp)
-    descElement.innerText = data.weather[0].description
-    weatherIconElement.setAttribute(
-        'src',
-        `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
-    )
-    countryElement.setAttribute('src', apiCountryURL + data.sys.country)
-    humidityElement.innerText = `${data.main.humidity}%`
-    windElement.innerText = `${data.wind.speed}km/h`
-
-    weatherContainer.classList.remove('hide')
-}
-
-function mostrar(data) {
-    if (data.cod === 404) {
-        weatherContainer.classList.add('hide')
-        return (container.innerText =
-            '<div id="error" class="not-found"></div>')
+    if (data.cod === '404') {
+        return (weatherContainer.innerHTML =
+            '<div id="error" class="not-found">Cidade não encontrada</div>')
     } else {
-        return (
-            <div id="weather-data" class="hide">
+        return (weatherContainer.innerHTML = `<div id="weather-data" >
                 <h2>
                     <i class="fa-solid fa-location-dot"></i>
-                    <span id="city"></span>
-                    <img src="" alt="Bandeira do país" id="country" />
+                    <span id="city">${data.name}</span>
+                    <img src="${
+                        apiCountryURL + data.sys.country
+                    }" alt="Bandeira do país" id="country" />
                 </h2>
                 <p id="temperature">
-                    <span></span>&deg;C
+                    <span>${parseInt(data.main.temp)}</span>&deg;C
                 </p>
                 <div id="description-container">
-                    <p id="description"></p>
-                    <img src="" alt="Condições do tempo" id="weather-icon" />
+                    <p id="description">${data.weather[0].description}</p>
+                    <img src="https://openweathermap.org/img/wn/${
+                        data.weather[0].icon
+                    }.png" alt="Condições do tempo" id="weather-icon" />
                 </div>
                 <div id="details-container">
                     <p id="humidity">
                         <i class="fa-solid fa-droplet"></i>
-                        <span></span>
+                        <span>${data.main.humidity}%</span>
                     </p>
                     <p id="wind">
                         <i class="fa-solid fa-wind"></i>
-                        <span></span>
+                        <span>${data.wind.speed}km/h</span>
                     </p>
                 </div>
-            </div>
-        )
+            </div>`)
     }
 }
 
