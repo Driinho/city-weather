@@ -2,6 +2,10 @@
 const apiKey = '2f2ab5c9032d0e0032b01fb45eff9ab8'
 const apiCountryURL = 'https://countryflagsapi.com/png/'
 
+const urlUnsplash = 'https://api.unsplash.com/photos/';
+const apiKeySecret = 'FokL9JpKfFDYpVuBFzQinSmU1G-fQJ9oVKvhvaF624U';
+const apiKeyPublic = 'IvU3C1QSOZKWUO30TqkEMT2qwe6QTfz1RNnuDfL432M';
+
 const cityInput = document.querySelector('#city-input')
 const searchBtn = document.querySelector('#search')
 
@@ -65,6 +69,20 @@ const showWeatherData = async city => {
     }
 }
 
+const showImage = async city => {
+    const api = `https://api.unsplash.com/search/photos?query=${city}&client_id=${apiKeyPublic}`
+
+    const res = await fetch(api).then(res => res.json())
+
+    const firstImage = res.results[0].urls.regular
+
+    document.body.style.backgroundImage = `url('${firstImage}')`
+    document.body.style.backgroundRepeat = 'no-repeat'
+    document.body.style.backgroundSize = '100% 100%'
+
+    console.log(firstImage);
+}
+
 // Eventos
 searchBtn.addEventListener('click', e => {
     e.preventDefault()
@@ -72,6 +90,7 @@ searchBtn.addEventListener('click', e => {
     const city = cityInput.value
 
     showWeatherData(city)
+    showImage(city);
 })
 
 cityInput.addEventListener('keyup', e => {
@@ -79,5 +98,6 @@ cityInput.addEventListener('keyup', e => {
         const city = e.target.value
 
         showWeatherData(city)
+        showImage(city);
     }
 })
