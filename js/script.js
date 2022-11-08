@@ -9,14 +9,6 @@ const apiKeyPublic = 'IvU3C1QSOZKWUO30TqkEMT2qwe6QTfz1RNnuDfL432M';
 const cityInput = document.querySelector('#city-input')
 const searchBtn = document.querySelector('#search')
 
-const cityElement = document.querySelector('#city')
-const tempElement = document.querySelector('#temperature span')
-const descElement = document.querySelector('#description')
-const weatherIconElement = document.querySelector('#weather-icon')
-const countryElement = document.querySelector('#country')
-const humidityElement = document.querySelector('#humidity span')
-const windElement = document.querySelector('#wind span')
-
 const weatherContainer = document.querySelector('.carregamento-api')
 
 // Funções
@@ -79,6 +71,7 @@ const showImage = async city => {
     document.body.style.backgroundImage = `url('${firstImage}')`
     document.body.style.backgroundRepeat = 'no-repeat'
     document.body.style.backgroundSize = '100% 100%'
+    document.getElementById('container').style.backgroundColor = 'rgba(92, 84, 237, 0.7)'
 
     console.log(firstImage);
 }
