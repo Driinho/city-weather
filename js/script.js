@@ -31,13 +31,13 @@ const showWeatherData = async city => {
             '<div id="error" class="not-found">Cidade não encontrada</div>')
     } else {
         return (weatherContainer.innerHTML = `<div id="weather-data" >
-                <h2>
-                    <i class="fa-solid fa-location-dot"></i>
-                    <span id="city">${data.name}</span>
-                    <img src="${
-                        apiCountryURL + data.sys.country
-                    }" alt="Bandeira do país" id="country" />
-                </h2>
+                // <h2>
+                //     <i class="fa-solid fa-location-dot"></i>
+                //     <span id="city">${data.name}</span>
+                //     <img src="${
+                //         apiCountryURL + data.sys.country
+                //     }" alt="Bandeira do país" id="country" />
+                // </h2>
                 <p id="temperature">
                     <span>${parseInt(data.main.temp)}</span>&deg;C
                 </p>
